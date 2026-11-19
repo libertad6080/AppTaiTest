@@ -1,0 +1,402 @@
+
+===== 20:56:36 · DUDOSA (marcada A, verificador X) =====
+¿Qué opción del comando tar de Linux permite eliminar las barras iniciales de las rutas absolutas al crear un archivo, forzándolas a ser relativas?
+A) --absolute-names
+B) --strip-path
+C) --pax-option
+D) -P
+
+===== 20:56:36 · DUDOSA (marcada B, verificador A) =====
+¿Qué opción del comando tar de Linux permite añadir nuevos ficheros o actualizar un archivo tar ya existente?
+A) -u
+B) -r
+C) -a
+D) -c
+
+===== 21:04:08 · REPETIDA (Comprimir múltiples archivos con Tar) =====
+¿Qué comando Linux comprueba la integridad de un archivo comprimido .tar.bz2 utilizando el algoritmo BZIP2?
+A) tar -cvf
+B) tar -jcvf
+C) tar -jxvf
+D) tar -jcv
+CORRECTA: C
+
+===== 21:04:14 · FORMATO INCORRECTO (Ignorar archivos específicos con Tar) =====
+¿Qué comando Linux ignora archivos específicos en un archivo .tar generado y qué opción permite especificar una lista de archivos a ignorar?
+A) tar --exclude=nombre_archivo -cvf archivo.tar nombre_directorio
+B) tar --exclude=nombre_archivo -xvf archivo.tar
+C) tar --exclude=nombre_archivo -cvf archivo.tar nombre_directorio
+D) tar --exclude=nombre_archivo -xvf archivo.tar
+CORRECTA: A
+
+===== 21:04:14 · FORMATO INCORRECTO (Ignorar archivos específicos con Tar) =====
+¿Qué comando Linux ignora archivos específicos al crear un archivo .tar.gz utilizando la opción --exclude?
+A) tar --exclude=archivo1 --exclude=archivo2 -cvzf archivo.tar.gz archivo1 archivo2
+B) tar --include=archivo1 --include=archivo2 -cvzf archivo.tar.gz archivo1 archivo2
+C) tar --exclude=archivo1 --exclude=archivo2 -cvzf archivo.tar.gz archivo1 archivo2
+D) tar --include=archivo1 --include=archivo2 -cvzf archivo.tar.gz archivo1 archivo2
+CORRECTA: C
+
+===== 21:04:17 · INCOHERENTE (Mostrar archivos comprimidos con Tar) marcada B, verificador D =====
+¿Qué comando Linux muestra todos los archivos comprimidos en un archivo .tar.gz?
+A) tar -xvf
+B) tar -tf
+C) tar -cvf
+D) tar -zvf
+
+===== 21:04:20 · REPETIDA (Comprimir archivos de una forma específica) =====
+¿Qué comando Linux comprime múltiples archivos individuales en un solo archivo .tar.gz y utiliza gzip?
+A) tar -czvf
+B) tar -czv
+C) gzip -cvf
+D) gzip -c
+CORRECTA: A
+
+===== 21:04:23 · REPETIDA (Comprimir múltiples directorios con Tar) =====
+¿Qué comando Linux comprueba la integridad de un archivo comprimido .tar.bz2 utilizando el algoritmo BZIP2?
+A) tar -jvxf
+B) tar -jxvf
+C) tar -jxv
+D) tar -jxvfz
+CORRECTA: B
+
+===== 21:04:33 · REPETIDA (concepto y definición de Linux ficheros Tar) =====
+¿Qué comando Linux crea un archivo .tar.gz a partir de varios archivos individuales sin incluir el archivo original .tar?
+A) tar -cvf
+B) tar -czf
+C) tar -cvzf
+D) tar -xfz
+CORRECTA: B
+
+===== 21:04:45 · INCOHERENTE (seguridad y cifrado de Linux ficheros Tar) marcada C, verificador X =====
+¿Qué comando Linux realiza un cifrado AES-256 en un archivo .tar.gz durante su creación?
+A) tar -cvzf
+B) tar -czvf
+C) openssl enc -aes-256 -in archivo.in -out archivo.tar.gz
+D) gpg --encrypt -r usuario archivo.tar.gz
+
+===== 21:04:52 · INCOHERENTE (comparación con alternativas de Linux ficheros Tar) marcada C, verificador X =====
+¿Qué comando Linux compara la cantidad de archivos individuales comprimidos en un archivo .tar.gz con la cantidad de archivos individuales originales?
+A) tar -t
+B) tar --count
+C) tar --compare
+D) tar --totals
+
+===== 21:04:59 · INCOHERENTE (seguridad y cifrado de Linux ficheros Tar) marcada A, verificador B =====
+¿Qué comando Linux realiza una transmisión cifrada segura de archivos utilizando el protocolo SSH2?
+A) ssh
+B) scp
+C) sftp
+D) sftp2
+
+===== 21:05:02 · REPETIDA (comparación con alternativas de Linux ficheros Tar) =====
+¿Qué comando Linux utiliza el algoritmo BZIP2 para crear un archivo .tar.bz2 a partir de varios archivos individuales?
+A) tar -cvf
+B) tar -cjf
+C) tar -czf
+D) tar -zcf
+CORRECTA: B
+
+===== 21:05:18 · INCOHERENTE (Extraer archivos de tar con opciones) marcada D, verificador X =====
+¿Qué comando se utiliza para extraer archivos de tar con un archivo de configuración adicional?
+A) tar -xvf filename.tar
+B) tar -tf filename.tar
+C) tar -tf filename.tar.config
+D) tar -tf filename.tar --list
+
+===== 21:05:21 · REPETIDA (Utilizar gzip en tar) =====
+¿Qué comando se utiliza para crear un archivo tar con compresión Gzip?
+A) tar -czvf nombrearchivo.tar.gz directorio/
+B) tar -cvf nombrearchivo.tar directorio/
+C) tar -cxvf nombrearchivo.tar.gz directorio/
+D) tar -czf nombrearchivo.tar.gz directorio/
+CORRECTA: A
+
+===== 21:05:24 · REPETIDA (Usar bz2 en archivo tar) =====
+¿Qué comando se utiliza para crear un archivo tar que incluye múltiples archivos individuales utilizando gzip y bzip2 en el mismo archivo?
+A) tar -cvf filename.tar *.txt
+B) tar -cvf filename.tar --gzip *.txt
+C) tar -cvf filename.tar --bzip2 *.txt
+D) tar -cvf filename.tar --gzip --bzip2 *.txt
+CORRECTA: D
+
+===== 21:05:27 · REPETIDA (Crear tar con directorios) =====
+¿Qué comando se utiliza para crear un archivo tar que incluye múltiples archivos individuales y directorios completos?
+A) tar -cvf
+B) tar -xvf
+C) tar -rf
+D) tar -zcf
+CORRECTA: A
+
+===== 21:05:34 · REPETIDA (Comprimir archivos con tar) =====
+¿Qué comando se utiliza para crear un archivo tar que incluye múltiples archivos individuales y que utiliza la opción --use-compress-program para comprimir con Gzip?
+A) tar -cvzf nombre_archivo.tar.gz
+B) tar -cvjz nombre_archivo.tar.gz
+C) tar -cvjz nombre_archivo.tar
+D) tar -cvjzf nombre_archivo.tar.gz
+CORRECTA: D
+
+===== 21:05:37 · REPETIDA (Crear tar con archivos especiales) =====
+¿Qué comando se utiliza para crear un archivo tar que incluye múltiples archivos individuales con archivos especiales como symlinks o sockets?
+A) tar -cvf
+B) tar -xf
+C) tar -pvf
+D) tar -tf
+CORRECTA: A
+
+===== 21:05:40 · REPETIDA (Extraer archivos de tar con patrones) =====
+¿Qué comando se utiliza para extraer un archivo tar que contiene múltiples archivos individuales y permite el uso de patrones para seleccionar qué archivos se extraen?
+A) tar -xf
+B) tar -xpf
+C) tar -xvf
+D) tar -xpfv
+CORRECTA: C
+
+===== 21:05:48 · REPETIDA (concepto y definición de Linux ficheros Tar) =====
+¿Qué comando Linux se utiliza para extraer archivos comprimidos (.tar.gz) sin descomprimirlos completamente?
+A) tar -xvzf
+B) tar -xzf
+C) tar -czvf
+D) tar -zcvf
+CORRECTA: B
+
+===== 21:05:52 · REPETIDA (componentes y arquitectura de Linux ficheros Tar) =====
+¿Qué comando se utiliza para crear un archivo tar que incluye múltiples archivos individuales y posteriormente comprimirlo utilizando Gzip o Bzip2?
+A) tar -czf
+B) tar -cf
+C) gzip -c
+D) bzip2 -c
+CORRECTA: A
+
+===== 21:05:55 · REPETIDA (protocolos, puertos y estándares de Linux ficheros Tar) =====
+¿Qué comando se utiliza para extraer un archivo tar.gz sin descomprimir los archivos individuales?
+A) tar -xzvf
+B) tar -xz
+C) tar -xzf
+D) tar -xvzf
+CORRECTA: C
+
+===== 21:05:59 · INCOHERENTE (seguridad y cifrado de Linux ficheros Tar) marcada A, verificador X =====
+¿Qué opción de configuración de tar -c -f crea un archivo tar que incluye múltiples archivos individuales y lo cifra en modo de seguridad AES?
+A) --aes
+B) --z
+C) --xz
+D) --aes256
+
+===== 21:06:02 · REPETIDA (ventajas e inconvenientes de Linux ficheros Tar) =====
+¿Qué comando se utiliza para extraer un archivo tar que contiene archivos comprimidos (.tar.gz o .tar.bz2) y cómo afecta la utilización de Gzip o Bzip2 en términos de velocidad de extracción?
+A) tar -xvzf filename.tar.gz
+B) tar -xvjf filename.tar.bz2
+C) gzip filename.tar.gz
+D) bzip2 filename.tar.bz2
+CORRECTA: A
+
+===== 21:06:06 · INCOHERENTE (comparación con alternativas de Linux ficheros Tar) marcada C, verificador X =====
+¿Qué comando Linux utiliza para crear un archivo tar comprimido (.tar.gz) sin necesidad de usar el parámetro "-z"?
+A) tar -cf
+B) tar -cvf
+C) tar -czf
+D) tar -cjf
+
+===== 21:06:10 · INCOHERENTE (Extraer archivos de tar con opciones) marcada A, verificador X =====
+¿Qué comando se utiliza para extraer un archivo .tar.bz2 incluyendo solo los archivos modificados desde la última vez que se extrajo?
+A) tar -xvjf archivo.tar.bz2
+B) tar -xvjx archivo.tar.bz2
+C) tar -xvzf archivo.tar.bz2
+D) tar -xvj archivo.tar.bz2
+
+===== 21:06:19 · REPETIDA (Usar bz2 en archivo tar) =====
+¿Qué comando se utiliza para crear un archivo tar que incluye múltiples archivos individuales utilizando comprimido con Bzip2?
+A) tar -cvf filename.tar.bz2 archivo1 archivo2 archivo3
+B) tar -cvf filename.tar.gz archivo1 archivo2 archivo3
+C) tar -cvf filename.tar archivo1 archivo2 archivo3
+D) tar -cjf filename.tar.bz2 archivo1 archivo2 archivo3
+CORRECTA: A
+
+===== 21:06:23 · REPETIDA (Crear tar con directorios) =====
+¿Qué comando se utiliza para crear un archivo tar que incluye múltiples archivos individuales y directorios?
+A) tar -cvf
+B) tar -xf
+C) tar -zcvf
+D) tar -jcvf
+CORRECTA: A
+
+===== 21:06:26 · REPETIDA (Comprimir archivos con tar) =====
+¿Qué comando utiliza por defecto el parámetro --use-compress-program=gzip en el comando tar para comprimir un archivo tar con Gzip?
+A) tar -cvzf
+B) tar -czvf
+C) tar -cvj
+D) tar -cjv
+CORRECTA: B
+
+===== 21:06:28 · REPETIDA (Crear tar con archivos especiales) =====
+¿Qué comando se utiliza para crear un archivo tar que incluye múltiples archivos individuales con opciones de Gzip o Bzip2?
+A) tar -cvf
+B) tar -czf
+C) tar -cf
+D) tar -xf
+CORRECTA: B
+
+===== 21:06:33 · REPETIDA (Extraer archivos de tar con patrones) =====
+¿Qué comando utiliza por defecto la opción --wildcards para extraer archivos de un archivo tar que incluye múltiples archivos según un patrón?
+A) tar -xf --wildcards archivo.tar
+B) tar -xzvf --wildcards archivo.tar
+C) tar -tf --wildcards archivo.tar
+D) tar -tf archivo.tar --wildcards
+CORRECTA: A
+
+===== 21:06:36 · REPETIDA (concepto y definición de Linux ficheros Tar) =====
+¿Qué comando se utiliza para crear un archivo Tar que incluye múltiples archivos individuales?
+A) tar -cvf
+B) tar -zcvf
+C) tar -jcvf
+D) tar -cvzf
+CORRECTA: A
+
+===== 21:06:39 · REPETIDA (componentes y arquitectura de Linux ficheros Tar) =====
+¿Qué comando utiliza por defecto la opción --use-compress-program=gzip en el comando tar para comprimir un archivo tar con Gzip?
+A) tar -czf
+B) tar -cz
+C) tar -cvf
+D) tar -zcf
+CORRECTA: A
+
+===== 21:06:43 · REPETIDA (protocolos, puertos y estándares de Linux ficheros Tar) =====
+¿Qué comando utiliza por defecto la opción --use-compress-program=gzip en el comando tar para comprimir un archivo tar con Gzip?
+A) tar -cf filename.tar
+B) tar -cvf filename.tar.gz --use-compress-program=gzip
+C) tar -cf filename.tar.bz2 --use-compress-program=gzip
+D) tar -cvf filename.tar --use-compress-program=gzip
+CORRECTA: B
+
+===== 21:06:47 · INCOHERENTE (seguridad y cifrado de Linux ficheros Tar) marcada C, verificador X =====
+¿Qué opción de la línea --force-local --force-sparse se usa para indicar a tar que no aplica cifrado a un archivo tar comprimido con Gzip?
+A) --no-md5
+B) --no-gzip
+C) --no-encrypt
+D) --no-md5 --no-gzip --no-encrypt
+
+===== 21:06:51 · REPETIDA (ventajas e inconvenientes de Linux ficheros Tar) =====
+¿Qué comando utiliza por defecto la opción --use-compress-program=gzip en el comando tar para comprimir un archivo tar con Gzip?
+A) tar -cvzf
+B) tar -cvj
+C) tar -cvxzf
+D) tar -cvxj
+CORRECTA: A
+
+===== 21:06:54 · REPETIDA (comparación con alternativas de Linux ficheros Tar) =====
+¿Qué comando se utiliza para extraer un archivo tar comprimido (.tar.gz) sin descomprimir los archivos individuales dentro del archivo tar?
+A) tar -xvzf filename.tar.gz
+B) tar -xjvf filename.tar.gz
+C) tar -xvf filename.tar.gz
+D) tar -xzf filename.tar.gz
+CORRECTA: A
+
+===== 21:06:57 · REPETIDA (Extraer archivos de tar con opciones) =====
+¿Qué comando utiliza por defecto la opción --wildcards en el comando tar para extraer archivos individuales de un archivo tar que incluye múltiples archivos?
+A) tar -x
+B) tar -xvf
+C) tar -x --wildcards
+D) tar -xjvf
+CORRECTA: C
+
+===== 21:07:00 · REPETIDA (Usar bz2 en archivo tar) =====
+¿Qué comando se utiliza para crear un archivo tar que contiene múltiples archivos individuales utilizando gzip para la compresión?
+A) tar -cvzf
+B) tar -cvf
+C) tar -cxvf
+D) tar -xvfz
+CORRECTA: A
+
+===== 21:07:03 · REPETIDA (Crear tar con directorios) =====
+¿Qué comando utiliza por defecto la opción --directory para crear un archivo tar que incluye múltiples directorios individuales?
+A) tar -cvf
+B) tar -cvf --directory
+C) tar -cvf --use-compress-program=gzip
+D) tar -cvf --use-compress-program=bzip2
+CORRECTA: A
+
+===== 21:07:04 · REPETIDA (Comprimir archivos con tar) =====
+¿Qué comando utiliza por defecto la opción --use-compress-program=gzip en el comando tar para comprimir un archivo tar con GZip?
+A) tar -cvf
+B) tar -czf
+C) tar -jcf
+D) tar -jvf
+CORRECTA: B
+
+===== 21:07:07 · REPETIDA (Crear tar con archivos especiales) =====
+¿Qué comando se utiliza para crear un archivo tar que incluye múltiples archivos individuales con formato especializado (como .gz o .bz2)?
+A) tar -cvf
+B) tar -czf
+C) tar -cf
+D) tar -cfz
+CORRECTA: B
+
+===== 21:07:10 · REPETIDA (Extraer archivos de tar con patrones) =====
+¿Qué comando utiliza por defecto el argumento --wildcards en el comando tar para extraer archivos con extensiones específicas de un archivo tar?
+A) tar -xzf
+B) tar -xjzf
+C) tar -xvf
+D) tar --wildcards -xvf
+CORRECTA: D
+
+===== 21:07:11 · REPETIDA (concepto y definición de Linux ficheros Tar) =====
+¿Qué comando utiliza por defecto la opción --use-compress-program=gzip en el comando tar para comprimir un archivo tar con GZip?
+A) tar -czf
+B) tar -zcf
+C) tar -zjf
+D) tar -gzf
+CORRECTA: A
+
+===== 21:07:13 · REPETIDA (componentes y arquitectura de Linux ficheros Tar) =====
+¿Qué comando utiliza por defecto la opción --use-compress-program=gzip en el comando tar para comprimir un archivo tar con Gzip?
+A) tar -czf
+B) tar -cz
+C) tar -czf --use-compress-program=gzip
+D) tar -zcf
+CORRECTA: A
+
+===== 21:07:15 · INCOHERENTE (protocolos, puertos y estándares de Linux ficheros Tar) marcada A, verificador D =====
+¿Qué opción de la siguiente lista se usa para especificar que los archivos dentro del archivo .tar deben ser comprimidos utilizando Gzip en lugar de Bzip2?
+A) --use-compress-program=gzip
+B) --use-compress-program=bzip2
+C) -z
+D) -j
+
+===== 21:07:22 · INCOHERENTE (ventajas e inconvenientes de Linux ficheros Tar) marcada A, verificador X =====
+¿Cuáles son las ventajas de utilizar tar para crear un archivo de respaldo?
+A) Simplifica el proceso de copia de seguridad y permite la gestión de múltiples archivos
+B) Reduce el tamaño del archivo de respaldo al utilizar formatos de archivo compactos
+C) Ofrece un encriptado predeterminado que no requiere configuración adicional
+D) Permite la ejecución de aplicaciones desde el archivo de respaldo sin necesidad de restaurar primero
+
+===== 21:07:25 · REPETIDA (comparación con alternativas de Linux ficheros Tar) =====
+¿Qué comando utiliza tar por defecto para comprimir un archivo .tar con Gzip?
+A) --gzip
+B) -z
+C) --gunzip
+D) -j
+CORRECTA: B
+
+===== 23:04:25 · DUDOSA (marcada B, verificador C) =====
+¿Qué especificación de OASIS WS se utiliza para combinar múltiples aserciones de WS-Policy en un contexto de seguridad y establecer un secreto compartido para una sesión prolongada?
+A) WS-Trust
+B) WS-Secure Conversation
+C) WS-SecurityPolicy
+D) WS-PolicyAssertion
+
+===== 18:34:00 · REPETIDA (Mecanismo de MLD Snooping en redes IPv6) =====
+¿Cuál es la función principal del mecanismo MLD Snooping en un switch de Capa 2?
+A) Limitar el tráfico de multidifusión IPv6 enviándolo únicamente a los puertos que han mostrado interés
+B) Asignar direcciones IPv6 de tipo Link-Local de manera automática a los dispositivos conectados
+C) Traducir paquetes de multidifusión IPv6 a multidifusión IPv4 para compatibilidad con IGMP
+D) Bloquear cualquier tráfico de multidifusión IPv6 para evitar ataques de denegación de servicio
+CORRECTA: A
+
+===== 22:48:50 · REPETIDA (Permisos y control basados en UID/GID) =====
+¿Qué identificador utiliza principalmente el núcleo de Linux para comprobar los permisos de acceso a archivos y recursos durante la ejecución de un proceso?
+A) PID
+B) EUID
+C) PPID
+D) SID
+CORRECTA: B

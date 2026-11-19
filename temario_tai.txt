@@ -1,0 +1,56 @@
+[BLOQUE 1 ORGANIZACIÓN PÚBLICA, ACTIVIDAD ADM. Y NORMATIVA DIGITAL]
+
+
+[BLOQUE 2 DESARROLLO DE SOFTWARE Y ACCESIBILIDAD WEB (W3C  WAI)]
+- Grupo SERVICIOS WEB, SOAP y REST
+   Tema OASIS Open  W3C WS: WS-Security , WS-Trust, WS-Reliable Messaging, WS-Discovery, WS-Secure Conversation, WS-Addressing, WS-Addressing, WS-Policy
+
+[BLOQUE 3 BASES DE DATOS (MODELO RELACIONAL Y ESTÁNDAR ANSI SQL)]
+
+
+[BLOQUE 4 INFORMÁTICA INTEGRAL, SISTEMAS, REDES Y CIBERSEGURIDAD]
+- Grupo Comandos de Sistemas Operativos(CMD y Linux)
+   Tema Comparacion comandos (CMD y Shell) de red:  escaneo-Puertos local y remoto, ARP, route, SSH, Configuración Firewall (netsh-advfirewall)
+   Tema Comparacion comandos (CMD y Shell) Usuarios y grupos: Crear, modificar borrar, asignación de grupos primarios y secnundarios
+   Tema Linux Permisos: (SUID, SGID, Sticky Bit) 
+   Tema Linux FHS: /bin, /sbin, /etc, /dev, /var, /usr, /lib, /proc, /mnt, /media, /opt
+   Tema Linux Procesos:  PID, PPID, TID, UID, GID, SID, EUID
+   Tema Windows CMD Gestión de red: Ipconfig, route, flushDNS, nslookup 
+   Tema Maquinas Virtuales: Hipervisor Tipo 1 y tipo 2
+   Tema Linux ficheros Tar: crear, extraer, Gzip, bz2
+
+- Grupo Redes, Comunicaciones y Protocolos
+   Tema IPv4 vs. IPv6: Loopback 1, Link-Local FE8010, Multicast FF008, IGMP Snooping,MLD Snooping, FF02::1:,FF02::2:
+   Tema Protocolos esenciales: POP3,IMAP,SMTP, USER, PASS, STAT LOGIN, STATUS , FETCH SFTP,FTPS,FTP
+   Tema Protocolos RED PUERTOS DEFICION , VERSION Y NIVEL CAPA OSI: DNS, SSH, SCP, TELNET,HTTPS,RDP, SOA (AAAA,PRT,MX)
+   Tema Protocolo SNMP: NMS, Agente, TRAP, INFORM, GET, GET-NEXT, GET-BULK, OID 
+   Tema Enrutamiento: RIPv2, RIPng, IGRP, OSPFv3, EIGRP, BGP, MPLS
+   Tema MODELO OSI y TCP-IP: Física (Bits) Concentradores (Hubs), Repetidores, Medios guiados/no guiados. Enlace de Datos (Tramas): Conmutadores L2 (Switches), Tarjetas de Red (NICs), Puentes (Bridges). Direccionamiento físico MAC. Red (Paquetes): Encaminadores (Routers), Conmutadores L3, Cortafuegos sin estado (Stateless). Direccionamiento lógico IP. Transporte (Segmentos/Datagramas): Cortafuegos con inspección de estado (Stateful) basados en puertos TCP/UDP.Sesión (Datos): Gestión del diálogo y control de conexiones entre aplicaciones del sistema operativo. Presentación (Datos): Formateo de sintaxis, compresión de datos y cifrado. Aplicación (Datos): Pasarelas de aplicación (Gateways), Servidores Proxy, Cortafuegos de Aplicación Web (WAF) y NGFW (L2-L7).
+   Tema IEEE 802, Ethernet y Redes Locales: LLC, MAC, IEEE 802.1X, IEEE 802.1D / 802.1w, STP, RSTP, BPDUs, IEEE 802.1AB, IEEE 802.1Q, IEEE 802.3, categorias del cable.
+   Tema Estándares IEEE 802.3:IEEE 802.3z, IEEE 802.3ab, Short, Long ,Extended, Coppe, IEEE 802.3an, IEEE 802.3bq, PoE.PoE+.PoE++ 
+   Tema IEEE 802.11 WIFI: 802.11ac, 802.11ax, 802.11be.
+   Tema IEEE 802.15 WPAN y 802.16: WMAN : 802.15.1 Bluetooth, IEEE  802.15.4 LR-WPAN 
+   Tema Redes no IEEE - Velocidad, uso y alcance: SD-WAN, LPWAN, LoRaWAN, Sigfox, NB-IoT, MAN, WAN
+   Tema Protocolo HTTP: HTTP/1.1, HTTP/2, HTTP/3, 400, 401, 403, 500, 503, 504
+   Tema Tecnologías VPN: IPSec (IKE, ESP, AH), OpenVPN, L2TP, GRE
+
+- Grupo CPD, Discos y Almacenamiento                     
+   Tema Almacenamiento RAID: RAID0, RAID1, RAID5 ,RAID6, RAID10, RAID50
+   Tema Almacenamiento extraible -puertos y velocidad: Thunderbolt, MDP,USB, USBC, DisplayPort
+   Tema Cabinas de almacenamiento - Diferencias: NAS y SAN,
+   Tema Infraestructura de Centro de Datos (CPD): Clasificación Tier 
+   Tema Computing y Modelos de Servicio: IaaS, PaaS, PaaS, NaaS
+   Tema Particionamiento:Ext4,Btrfs,XFS,OpenZFS,F2FS,NTFS
+
+- Grupo Contenedores y Orquestación
+   Tema Motores: Docker, Podman, Containerd, CRI-O
+   Tema Orquestadores: Kubernetes (K8s), Docker Swarm
+   Tema Cloud: AWS ECS, Azure AKS, Google GKE
+   Tema Repositorios: Docker Hub, Harbor
+   Tema Kubernetes: Volume, POD, Service, etcd,Control Plane, Scheduler, Kubelet,Metadata, Spec
+   Tema Docker comandos: run, stop, start, restart, rm, build, volume, network, ps, pull,
+
+- Grupo Hardware y Computacion
+  Arquitectura:RI,REG,PC-Contador,MAR-Reg,MBR-Reg,AC-Acumulador,FETCH,DECODE,EXECUTE,Short-term o CPU Scheduler,Medium-term o Swapper,Long-termo Job Scheduler,I/O Scheduler,CISC,RISC             
+
+  

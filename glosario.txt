@@ -1,0 +1,1688 @@
+Algoritmo
+Array
+Vector
+Matriz
+Puntero
+Recursividad
+Clase
+Objeto
+Método
+Atributo de clase
+Constructor
+Modificador de acceso
+Public
+Private
+Protected
+Static
+Extends
+Implements
+Herencia
+Polimorfismo
+Abstracción
+Modularidad
+Reusabilidad
+Clase abstracta
+Interfaz
+Compilador
+Intérprete
+Interpretador
+Bytecode
+JVM
+JRE
+JDK
+JIT
+CLR
+MSIL
+Ensamblador
+Lenguaje máquina
+Lenguaje de alto nivel
+Lenguaje de programación
+Lenguaje de marcado
+Depuración
+Bug
+Refactorización
+Deuda técnica
+Quality Gate
+Revisión de código
+Linter
+Clean Code
+Tipo abstracto de datos
+Lista enlazada
+Lista doblemente enlazada
+Pila
+Cola
+LIFO
+Árbol binario
+Árbol AVL
+Árbol 2-3-4
+Recorrido inorden
+Recorrido preorden
+Recorrido postorden
+Grafo
+Quicksort
+Mergesort
+Heapsort
+Ordenación por burbuja
+Ordenación por inserción
+Ordenación por selección
+Backtracking
+Dijkstra
+Floyd-Warshall
+Kruskal
+Prim
+Arquitectura cliente-servidor
+Microservicios
+Serverless
+Arquitectura multinivel
+Arquitectura en capas
+SOA
+Bus de servicios empresarial
+Middleware
+Inversión de control
+Inyección de dependencias
+Patrón de diseño
+Patrón creacional
+Patrón estructural
+Patrón de comportamiento
+Singleton
+Factory
+Builder
+Prototype
+Adapter
+Decorator
+Composite
+Facade
+Observer
+Strategy
+Iterator
+Interpreter
+GRASP
+Gang of Four
+MVC
+DTO
+DAO
+POJO
+REST
+RESTful
+API REST
+OpenAPI
+Swagger
+RAML
+SOAP
+GraphQL
+WSDL
+UDDI
+WSIL
+WS-Security
+WS-Addressing
+WS-Policy
+WS-Federation
+WS-SecureConversation
+XML-Encryption
+XML-Signature
+Métrica v3
+Scrum
+Sprint
+Daily Scrum
+Sprint Planning
+Sprint Review
+Sprint Retrospective
+Product Backlog
+Kanban
+Manifiesto Ágil
+Extreme Programming
+Metodología ágil
+Cascada
+DevOps
+DevSecOps
+Integración continua
+Entrega continua
+C
+C++
+C#
+PHP
+Ruby
+Swift
+Kotlin
+F#
+Go
+Rust
+Perl
+Pascal
+Objective-C
+Fortran
+COBOL
+Python
+Java
+TypeScript
+ECMAScript
+JavaScript
+HTML
+HTML5
+CSS
+CSS3
+Flexbox
+Diseño responsivo
+Viewport
+Node.js
+npm
+React
+Angular
+Vue
+Bootstrap
+jQuery
+Sass
+Less
+Stylus
+Django
+Flask
+Laravel
+Spring
+Spring Boot
+Hibernate
+Doctrine
+Entity Framework
+NHibernate
+JPA
+EclipseLink
+JDBC
+ODBC
+ADO.NET
+JAXB
+JAX-RS
+JAX-WS
+JSTL
+Jakarta EE
+Java EE
+Enterprise JavaBeans
+Servlet
+JSP
+JSF
+JNI
+JNA
+DOM
+SAX
+StAX
+XSLT
+XPath
+XSD
+DTD
+JSON
+YAML
+AJAX
+WebSocket
+Server-Sent Events
+Server Side Rendering
+Cookie HttpOnly
+SameSite
+Promesa
+Callback
+Async
+JWT
+SAML
+OAuth
+OpenID
+ASP.NET Core
+Razor
+Blazor
+Kestrel
+Aplicación web progresiva
+Aplicación híbrida
+Aplicación nativa
+Xamarin
+.NET MAUI
+Flutter
+Ionic
+Control de versiones
+Git
+GitHub
+GitLab
+Subversion
+Mercurial
+CVS
+Rama
+Branch
+Trunk
+Merge
+Checkout
+Rebase
+Clone
+Fork
+Pull request
+Tag
+README
+Repositorio bare
+Maven
+Ant
+Gradle
+NuGet
+Jenkins
+SonarQube
+PMD
+Checkstyle
+JUnit
+Mockito
+Selenium
+Cucumber
+JMeter
+TestLink
+Prueba unitaria
+Prueba de integración
+Prueba de sistema
+Prueba de aceptación
+Prueba de regresión
+Prueba de carga
+Prueba de estrés
+Prueba de humo
+Caja blanca
+Caja negra
+SAST
+DAST
+SCA
+Accesibilidad
+WCAG
+WAI-ARIA
+ATAG
+UAAG
+Diseño universal
+Usabilidad
+Heurísticas de Nielsen
+Modelo OSI
+Modelo TCP/IP
+PDU
+Jumbo frame
+MTU
+Encapsulación
+Capa física
+Capa de enlace
+Capa de red
+Capa de transporte
+Capa de sesión
+Capa de presentación
+Capa de aplicación
+LLC
+MAC
+CSMA/CD
+CSMA/CA
+IPv4
+IPv6
+Dirección IP
+Dirección de broadcast
+Dirección de multicast
+Dirección de unicast
+Dirección anycast
+Dirección de loopback
+Dirección privada
+Dirección pública
+APIPA
+Clase A
+Clase B
+Clase C
+Clase D
+Clase E
+Wildcard
+Máscara de subred
+Subred
+Subnetting
+CIDR
+VLSM
+Sumarización de rutas
+Enlace local
+Dirección global unicast
+Dirección unique local
+Neighbor Discovery
+SLAAC
+ICMPv6
+DHCPv6
+Doble pila
+Túnel 6to4
+TCP
+UDP
+ICMP
+Ping
+Traceroute
+ARP
+Proxy ARP
+ARP spoofing
+RARP
+BOOTP
+DHCP
+DHCP Relay
+Lease
+DNS
+DNSSEC
+DNS recursivo
+DNS autoritativo
+Caché DNS
+DNS over HTTPS
+DNS over TLS
+Resolver
+Registro DNS
+Registro A
+Registro AAAA
+Registro CNAME
+Registro MX
+Registro NS
+Registro PTR
+Registro SOA
+Registro TXT
+Registro SRV
+Zona DNS
+Transferencia de zona
+NAT
+NAT estático
+NAT dinámico
+PAT
+Port forwarding
+HTTP
+HTTP/2
+HTTP/3
+HTTPS
+QUIC
+Método HTTP
+GET
+POST
+PUT
+PATCH
+OPTIONS
+Código de estado HTTP
+200 OK
+201 Created
+204 No Content
+301
+302
+304
+400 Bad Request
+401 Unauthorized
+403 Forbidden
+404 Not Found
+405 Method Not Allowed
+409 Conflict
+500 Internal Server Error
+502 Bad Gateway
+503 Service Unavailable
+FTP
+TFTP
+SFTP
+SSH
+Telnet
+SMTP
+SMTPS
+POP3
+POP3S
+IMAP
+IMAPS
+SNMP
+SNMPv3
+MIB
+OID
+Trap
+Agente SNMP
+Gestor SNMP
+NTP
+SNTP
+LDAP
+LDAPS
+RDP
+TLS
+SSL
+Puerto efímero
+Puerto bien conocido
+Socket
+Paquete
+Trama
+Segmento
+Datagrama
+Enrutamiento
+Enrutamiento estático
+Enrutamiento dinámico
+RIP
+RIPng
+OSPF
+OSPFv3
+BGP
+EIGRP
+IGRP
+IS-IS
+Protocolo de vector de distancia
+Protocolo de estado de enlace
+Métrica de enrutamiento
+Distancia administrativa
+Split horizon
+Poison reverse
+Hold down
+Triggered updates
+Tabla de enrutamiento
+Spanning Tree Protocol
+Rapid Spanning Tree Protocol
+BPDU
+Etherchannel
+LACP
+VTP
+CDP
+LLDP
+BSSID
+Red inalámbrica
+Wi-Fi
+Wi-Fi 6
+Wi-Fi 6E
+Wi-Fi 7
+IEEE 802.11
+IEEE 802.11ac
+IEEE 802.11ax
+IEEE 802.11be
+WPA
+WPA2
+WPA3
+WEP
+WPS
+KRACK
+EAP
+EAP-TLS
+PEAP
+Roaming
+Controlador WLAN
+SSID
+Punto de acceso
+Bluetooth
+Bluetooth Low Energy
+Piconet
+Scatternet
+ZigBee
+NFC
+RFID
+LoRaWAN
+Sigfox
+NB-IoT
+LPWAN
+LTE
+5G
+GSM
+UMTS
+CDMA
+Banda ISM
+Banda de 2,4 GHz
+Banda de 5 GHz
+Banda de 6 GHz
+Dividendo digital
+Topología de red
+Topología en bus
+Topología en anillo
+Topología en estrella
+Topología en malla
+Topología en árbol
+Topología física
+Topología lógica
+Topología híbrida
+Topología punto a punto
+Ethernet
+Fast Ethernet
+Gigabit Ethernet
+10 Gigabit Ethernet
+1000BASE-T
+1000BASE-SX
+1000BASE-LX
+Token Ring
+FDDI
+ATM
+Frame Relay
+MPLS
+PoE
+IEEE 802.1Q
+IEEE 802.1D
+IEEE 802.1w
+IEEE 802.1X
+IEEE 802.3
+IEEE 802.15
+IEEE 802.16
+Cable de par trenzado
+UTP
+STP
+FTP apantallado
+Categoría 6A
+Categoría 7
+Categoría 8
+Fibra óptica
+Fibra monomodo
+Fibra multimodo
+OM4
+OS2
+Cable coaxial
+Conector RJ45
+Diafonía
+Atenuación
+Impedancia
+Router
+Switch
+Hub
+Bridge
+Gateway
+Repetidor
+Módem
+Tarjeta de red
+Balanceador de carga
+Proxy
+Proxy inverso
+Proxy transparente
+CDN
+VLAN
+Puerta de enlace
+VPN
+Intranet
+Extranet
+Red POLAN
+PON
+GPON
+ONU
+OLT
+FTTH
+FTTx
+xDSL
+ADSL
+VDSL
+HFC
+Cable módem
+Radioenlace
+Microondas
+Wi-Fi Mesh
+SDN
+NFV
+Overlay
+VXLAN
+Underlay
+SD-WAN
+Fabric
+Spine-leaf
+Stacking
+Cableado estructurado
+Cableado horizontal
+Cableado vertical
+Armario rack
+Unidad de rack
+Patch panel
+Latiguillo
+QoS
+Calidad de servicio
+Ancho de banda
+Latencia
+Jitter
+Pérdida de paquetes
+Throughput
+Goodput
+RTT
+DiffServ
+IntServ
+Marcado DSCP
+Priorización de tráfico
+Traffic shaping
+Policing
+Cola de prioridad
+Control de flujo
+Control de congestión
+Ventana deslizante
+Three-way handshake
+Slow start
+SIP
+RTP
+RTCP
+RSVP
+SDP
+RTSP
+H.323
+MGCP
+VoIP
+Telefonía IP
+Códec
+Sistema gestor de bases de datos
+SGBD
+Instancia
+Listener
+Tablespace
+Datafile
+Extensión
+Bloque de datos
+Esquema
+Catálogo
+Diccionario de datos
+Base de datos relacional
+Base de datos NoSQL
+Base de datos orientada a documentos
+Base de datos clave-valor
+Base de datos en grafo
+Base de datos distribuida
+Base de datos en memoria
+Base de datos orientada a objetos
+Base de datos objeto-relacional
+Base de datos columnar
+Modelo entidad-relación
+Modelo entidad-relación extendido
+Modelo relacional
+Atributo
+Cardinalidad
+Generalización
+Especialización
+Agregación
+Composición
+Asociación
+Normalización
+Primera forma normal
+Segunda forma normal
+Tercera forma normal
+Forma normal de Boyce-Codd
+Cuarta forma normal
+Quinta forma normal
+Desnormalización
+Dependencia funcional
+Dependencia multivaluada
+Dependencia de reunión
+Anomalía de actualización
+Integridad referencial
+Integridad de entidad
+Integridad de dominio
+Integridad semántica
+Clave primaria
+Clave foránea
+Clave candidata
+Clave alternativa
+Clave compuesta
+Clave surrogada
+Restricción UNIQUE
+Restricción NOT NULL
+Restricción CHECK
+Valor nulo
+DDL
+DML
+DCL
+TCL
+DQL
+SQL
+PL/SQL
+Transact-SQL
+OQL
+SELECT
+INSERT
+UPDATE
+DELETE
+ALTER
+DROP
+TRUNCATE
+GRANT
+REVOKE
+COMMIT
+ROLLBACK
+SAVEPOINT
+JOIN
+INNER JOIN
+LEFT JOIN
+RIGHT JOIN
+FULL JOIN
+CROSS JOIN
+UNION
+INTERSECT
+EXCEPT
+GROUP BY
+HAVING
+ORDER BY
+WHERE
+LIKE
+DISTINCT
+SUM
+COUNT
+AVG
+MAX
+MIN
+CASE
+BETWEEN
+EXISTS
+Alias
+Subconsulta
+Consulta
+Función de agregación
+Producto cartesiano
+Álgebra relacional
+Cálculo relacional
+Regla de Codd
+Índice
+Vista
+Trigger
+Disparador
+Función almacenada
+Cursor
+Secuencia
+PreparedStatement
+ResultSet
+Statement
+Optimizador de consultas
+Plan de ejecución
+Transacción
+ACID
+Atomicidad
+Consistencia
+Aislamiento
+Durabilidad
+Concurrencia
+Bloqueo
+Bloqueo compartido
+Bloqueo exclusivo
+Interbloqueo
+Deadlock
+Nivel de aislamiento
+Read uncommitted
+Read committed
+Repeatable read
+Serializable
+Lectura sucia
+Lectura no repetible
+Lectura fantasma
+Data warehouse
+Data mart
+Data lake
+Cubo OLAP
+Cubo de datos
+ETL
+OLTP
+OLAP
+Esquema en estrella
+Esquema copo de nieve
+Tabla de hechos
+Tabla de dimensiones
+Minería de datos
+Big Data
+Data mining
+Replicación
+Particionado
+Sharding
+Réplica
+Oracle
+MySQL
+MariaDB
+PostgreSQL
+SQL Server
+SQLite
+MongoDB
+Redis
+Cassandra
+Neo4j
+CouchDB
+DynamoDB
+Riak
+Arquitectura Von Neumann
+Arquitectura Harvard
+RISC
+CISC
+ALU
+CPU
+GPU
+Chipset
+Placa base
+Zócalo del procesador
+Registro de instrucción
+Contador de programa
+Taxonomía de Flynn
+Memoria RAM
+Memoria ROM
+DRAM
+SRAM
+Memoria volátil
+Memoria flash
+Memoria caché
+Jerarquía de memoria
+Disco duro
+HDD
+Disco SSD
+SSD
+SATA
+SAS
+SCSI
+PCIe
+NVMe
+M.2
+eSATA
+HDMI
+DVI
+DisplayPort
+FireWire
+Thunderbolt
+USB Tipo C
+RAID
+RAID 0
+RAID 1
+RAID 2
+RAID 3
+RAID 4
+RAID 5
+RAID 6
+RAID 10
+RAID 50
+RAID 60
+RAID por software
+RAID por hardware
+Paridad
+Striping
+Mirroring
+Hot swap
+Hot spare
+BIOS
+UEFI
+Secure Boot
+GRUB
+Gestor de arranque
+Sistema operativo
+Núcleo
+Kernel
+Microkernel
+Núcleo monolítico
+Shell
+Intérprete de comandos
+Línea de comandos
+Terminal
+Hilo
+Hebra
+Demonio
+Servicio
+Proceso huérfano
+Proceso zombi
+PID
+PPID
+UID
+GID
+Planificador
+Planificación de procesos
+Planificador a corto plazo
+Planificador a medio plazo
+Planificador a largo plazo
+Round robin
+FIFO
+FCFS
+SJF
+Prioridades
+Multicolas
+Quantum
+Multitarea
+Multiprocesamiento
+Multiusuario
+Sistema en tiempo real
+Sistema por lotes
+Sistema distribuido
+Cambio de contexto
+Estado de un proceso
+Prioridad
+Semáforo
+Mutex
+Sección crítica
+Condición de carrera
+Inanición
+Paralelismo
+Interrupción
+Llamada al sistema
+Modo kernel
+Modo usuario
+Spooling
+DMA
+Controlador de dispositivo
+Driver
+Memoria principal
+Memoria secundaria
+Memoria virtual
+Paginación
+Segmentación
+Intercambio
+Swap
+Swapping
+Thrashing
+TLB
+Fallo de página
+Tabla de páginas
+Fragmentación
+Gestión de memoria
+Sistema de archivos
+FAT32
+NTFS
+ext3
+ext4
+exFAT
+APFS
+XFS
+Btrfs
+ZFS
+ReFS
+HFS+
+UFS
+Inodo
+Directorio
+Ruta absoluta
+Ruta relativa
+Enlace simbólico
+Enlace duro
+Permisos
+Superusuario
+Sudo
+Superbloque
+Journaling
+Partición
+Partición primaria
+Partición extendida
+Partición lógica
+MBR
+GPT
+LVM
+Volumen lógico
+Volumen físico
+Grupo de volúmenes
+Montaje
+Punto de montaje
+Linux
+Windows
+macOS
+Unix
+Android
+iOS
+Windows Server
+Active Directory
+Directorio activo
+Bosque
+Árbol de dominios
+Unidad organizativa
+Catálogo global
+Relación de confianza
+GPO
+Directiva de grupo local
+Kerberos
+NTLM
+LDAPS
+RADIUS
+TACACS+
+AAA
+BitLocker
+EFS
+WSUS
+SCCM
+Intune
+MDM
+BYOD
+COPE
+COBO
+CYOD
+CMD
+Cmdlet
+PowerShell
+Visor de eventos
+System File Checker
+chkdsk
+sfc
+net user
+net localgroup
+ipconfig
+tracert
+nslookup
+netstat
+route
+netsh
+Ubuntu
+Debian
+Red Hat Enterprise Linux
+CentOS
+Fedora
+Solaris
+FreeBSD
+Zsh
+Bash
+ls
+cd
+pwd
+cat
+grep
+awk
+sed
+tail
+head
+chmod
+chown
+chgrp
+su
+useradd
+usermod
+passwd
+ps
+top
+kill
+df
+du
+mount
+umount
+fsck
+mkfs
+fdisk
+tar
+gzip
+scp
+rsync
+crontab
+systemd
+systemctl
+journalctl
+uname
+lsof
+ip
+ifconfig
+iptables
+nftables
+ufw
+SELinux
+AppArmor
+Máquina virtual
+Virtualización
+Hipervisor
+Hipervisor tipo 1
+Hipervisor tipo 2
+Contenedor
+Contenedor Docker
+Docker
+Dockerfile
+Docker Compose
+Podman
+Containerd
+CRI-O
+LXC
+Pod
+Orquestación
+Kubernetes
+Helm
+Ansible
+Puppet
+Chef
+Terraform
+Infraestructura como código
+IaC
+IaaS
+PaaS
+SaaS
+NaaS
+Nube pública
+Nube privada
+Nube híbrida
+Nube comunitaria
+Almacenamiento en la nube
+Computación en la nube
+OpenStack
+Azure
+AWS
+Google Cloud
+Hyper-V
+KVM
+Xen
+Proxmox
+VDI
+Escritorio virtual
+Snapshot de máquina virtual
+Migración en vivo
+Alta disponibilidad
+Tolerancia a fallos
+Balanceo de carga
+Activo-activo
+Activo-pasivo
+Failover
+Failback
+Redundancia
+Resiliencia
+Disponibilidad
+Fiabilidad
+Mantenibilidad
+Escalado horizontal
+Escalado vertical
+Escalabilidad
+Clúster
+SAN
+NAS
+DAS
+Thin provisioning
+Infraestructura convergente
+Infraestructura hiperconvergente
+Centro de proceso de datos
+PUE
+TIER
+Uptime Institute
+ANSI/TIA 942
+Malware
+Virus informático
+Gusano informático
+Troyano
+Ransomware
+Spyware
+Adware
+Rootkit
+Keylogger
+Botnet
+Bot
+Wiper
+Cryptojacking
+Phishing
+Spear phishing
+Vishing
+Smishing
+Pharming
+Whaling
+Tailgating
+Piggybacking
+Quid pro quo
+Pretexting
+Shoulder surfing
+Dumpster diving
+Baiting
+Ingeniería social
+Spam
+Clickjacking
+Spoofing
+Sniffing
+Ataque de fuerza bruta
+Ataque de diccionario
+Ataque DoS
+Ataque DDoS
+SYN flood
+Ping de la muerte
+Fraggle
+Smurf
+Ataque man-in-the-middle
+Inyección SQL
+Inyección de comandos
+Cross-site scripting
+Cross-site request forgery
+Desbordamiento de búfer
+Path traversal
+Directory traversal
+Secuestro de sesión
+Fijación de sesión
+SSRF
+XXE
+Exploit
+Vulnerabilidad
+Zero-day
+Ataque de día cero
+APT
+Amenaza persistente avanzada
+Ciberespionaje
+Ciberataque
+Ciberincidente
+Escalada de privilegios
+Movimiento lateral
+Puerta trasera
+Bomba lógica
+Command and control
+Ryuk
+WannaCry
+Emotet
+Mirai
+Stuxnet
+CVE
+CVSS
+NVD
+CWE
+CAPEC
+MITRE ATT&CK
+Kill chain
+Cyber Kill Chain
+Ciberseguridad
+Antivirus
+Cortafuegos
+Firewall
+Firewall stateful
+Firewall stateless
+Firewall de nueva generación
+WAF
+Web Application Firewall
+Cortafuegos de capa de red
+Cortafuegos de aplicación
+IDS
+IPS
+HIDS
+NIDS
+WIPS
+SIEM
+Honeypot
+Honeynet
+Sandbox
+Sandboxing
+Pentesting
+Hacking ético
+Escaneo de vulnerabilidades
+EDR
+XDR
+SOC
+CERT
+CSIRT
+CCN-CERT
+INCIBE
+DLP
+Zero Trust
+Defensa en profundidad
+Segmentación de red
+DMZ
+Red perimetral
+Zona desmilitarizada
+Lista de control de acceso
+ACL
+NAC
+Port security
+SCAP
+OVAL
+STIX
+TAXII
+IoC
+Indicador de compromiso
+Inteligencia de amenazas
+Threat hunting
+Red team
+Blue team
+Purple team
+Bug bounty
+Divulgación responsable
+Criptografía
+Cifrado simétrico
+Cifrado asimétrico
+Cifrado híbrido
+Cifrado de flujo
+Cifrado de bloque
+Modo CBC
+Modo ECB
+Modo CTR
+Modo GCM
+Vector de inicialización
+Nonce
+Clave privada
+Clave pública
+Clave de sesión
+Intercambio de claves
+Perfect Forward Secrecy
+Función hash
+Resumen criptográfico
+MD5
+SHA-1
+SHA-2
+SHA-256
+SHA-3
+HMAC
+Salt
+Pepper
+Colisión
+AES
+DES
+3DES
+TDES
+IDEA
+Blowfish
+Twofish
+RC4
+RC5
+Camellia
+ChaCha20
+RSA
+DSA
+ECDSA
+EdDSA
+ElGamal
+Diffie-Hellman
+ECC
+Criptografía de curva elíptica
+Criptografía cuántica
+Criptografía poscuántica
+Certificado digital
+Certificado X.509
+Certificado autofirmado
+Certificado wildcard
+Certificado de servidor
+Certificado de cliente
+Certificado raíz
+Cadena de certificación
+Certificate pinning
+Firma electrónica
+Firma digital
+Firma electrónica avanzada
+Firma electrónica cualificada
+Sello electrónico
+Sello de tiempo
+S/MIME
+CAdES
+XAdES
+PAdES
+AdES
+Firma longeva
+Co-firma
+Contrafirma
+Firma detached
+Firma enveloping
+Firma enveloped
+PKI
+Infraestructura de clave pública
+Autoridad de certificación
+Autoridad de registro
+Autoridad de validación
+Lista de revocación de certificados
+CRL
+OCSP
+OCSP Stapling
+TSA
+AutoFirma
+@firma
+Port@firmas
+Cl@ve
+Cl@ve PIN
+Cl@ve Permanente
+DNIe
+DNI electrónico
+Nodo eIDAS
+STORK
+Identidad digital
+Identidad electrónica
+Prestador de servicios de confianza
+Prestador cualificado de servicios de confianza
+Autenticación
+Autenticación multifactor
+Segundo factor de autenticación
+Doble factor de autenticación
+OTP
+Token
+Token de seguridad
+Tarjeta inteligente
+Tarjeta criptográfica
+PKCS
+PKCS#11
+Autorización
+Control de acceso
+Single sign-on
+Principio de mínimo privilegio
+Separación de funciones
+TLS 1.2
+TLS 1.3
+Handshake
+ClientHello
+ServerHello
+Suite de cifrado
+STARTTLS
+IPsec
+AH
+ESP
+IKE
+IKEv2
+ISAKMP
+L2TP
+PPTP
+SSTP
+OpenVPN
+WireGuard
+GRE
+Túnel
+Split tunneling
+TOR
+PGP
+GPG
+HSTS
+CSP
+CORS
+Content Security Policy
+Ley 39/2015
+Ley 40/2015
+Ley 19/2013
+Ley 50/1997
+Ley 56/2007
+Ley 6/2020
+Ley 4/2023
+Ley Orgánica 3/2007
+Ley Orgánica 3/2018
+Ley Orgánica 3/1981
+Ley 39/2006
+Real Decreto 203/2021
+Real Decreto 4/2010
+Real Decreto 3/2010
+Real Decreto 1112/2018
+Real Decreto 1553/2005
+Real Decreto Legislativo 5/2015
+Real Decreto Legislativo 1/2013
+Reglamento (UE) 2016/679
+Reglamento (UE) 910/2014
+eIDAS
+RGPD
+LOPDGDD
+LSSI
+LSSI-CE
+ENS
+Esquema Nacional de Seguridad
+Esquema Nacional de Interoperabilidad
+ENI
+NIS2
+Directiva NIS
+Ley de Servicios Digitales
+Ley de Mercados Digitales
+Reglamento de Inteligencia Artificial
+Estatuto Básico del Empleado Público
+EBEP
+Punto de Acceso General
+Registro electrónico
+Registro electrónico de apoderamientos
+Notificación electrónica
+Dirección Electrónica Habilitada única
+Carpeta Ciudadana
+Portal de la Transparencia
+Datos abiertos
+Interoperabilidad
+Interoperabilidad organizativa
+Interoperabilidad semántica
+Interoperabilidad técnica
+Norma Técnica de Interoperabilidad
+Plataforma de Intermediación de Datos
+SCSP
+DIR3
+SICRES
+ORVE
+GEISER
+SIR
+Archive
+Inside
+FACe
+FACeB2B
+eFACT
+Facturae
+Red SARA
+SARA
+Red NEREA
+Transformación digital
+España Digital 2025
+Procedimiento administrativo común
+Acto administrativo
+Silencio administrativo
+Silencio positivo
+Silencio negativo
+Recurso de alzada
+Recurso potestativo de reposición
+Comparecencia electrónica
+Obligados a relacionarse electrónicamente
+Sector público
+Administración General del Estado
+Administración local
+Administración autonómica
+Organismo autónomo
+Entidad pública empresarial
+Agencia estatal
+Funcionario de carrera
+Funcionario interino
+Personal laboral
+Personal eventual
+Interesado
+Responsable del tratamiento
+Encargado del tratamiento
+Corresponsable del tratamiento
+Delegado de protección de datos
+DPD
+Tratamiento de datos
+Base jurídica
+Consentimiento
+Consentimiento informado
+Interés legítimo
+Minimización de datos
+Limitación de la finalidad
+Limitación del plazo de conservación
+Exactitud
+Integridad y confidencialidad
+Responsabilidad proactiva
+Privacidad desde el diseño
+Privacidad por defecto
+Evaluación de impacto
+Registro de actividades de tratamiento
+Brecha de seguridad
+Notificación de brechas
+Derecho de acceso
+Derecho de rectificación
+Derecho de supresión
+Derecho al olvido
+Derecho de oposición
+Derecho a la limitación del tratamiento
+Derecho a la portabilidad
+Decisiones automatizadas
+Elaboración de perfiles
+Transferencia internacional de datos
+Cláusulas contractuales tipo
+Normas corporativas vinculantes
+Agencia Española de Protección de Datos
+AEPD
+Derechos digitales
+Testamento digital
+Derecho a la desconexión digital
+Análisis de riesgos
+Gestión de riesgos
+Salvaguarda
+Impacto
+Incidente
+Plan de contingencia
+Plan de continuidad de negocio
+Política de seguridad
+RTO
+RPO
+MAGERIT
+CCN-STIC
+Guía CCN-STIC
+CARMEN
+CLARA
+CLAUDIA
+ELENA
+EMMA
+GLORIA
+LUCIA
+MARIA
+MONICA
+OLVIDO
+REYES
+ANA
+INES
+ATENEA
+VANESA
+LORETO
+MARTA
+CCN
+Centro Criptológico Nacional
+ISO 27001
+ISO 27002
+ISO 9001
+ISO 20000
+ISO 22301
+ISO 31000
+ITIL
+COBIT
+PCI DSS
+TOGAF
+PMBOK
+PRINCE2
+CMMI
+Acuerdo de nivel de servicio
+SLA
+SLO
+OLA
+Service Desk
+Ticketing
+CMDB
+Gestión de incidentes
+Gestión de cambios
+Gestión de la configuración
+Gestión de problemas
+Gestión de la capacidad
+Gestión de activos
+Contratación pública
+Licitación electrónica
+Pliego de prescripciones técnicas
+Plataforma de Contratación del Sector Público
+Auditoría informática
+Auditoría de seguridad
+Cumplimiento normativo
+Compliance
+Informática forense
+Cadena de custodia
+Evidencia digital
+Prueba electrónica
+Licencia de software
+Software libre
+Código abierto
+Software propietario
+Open source
+Open data
+Licencia GPL
+Licencia LGPL
+Licencia BSD
+Licencia MIT
+Licencia Apache
+Creative Commons
+Dominio público
+Copyleft
+Copyright
+Regla 3-2-1
+Copia de seguridad completa
+Copia de seguridad incremental
+Copia de seguridad diferencial
+Deduplicación
+Snapshot
+Instantánea
+Vaulting
+Backup
+Restauración
+Recuperación ante desastres
+SAI
+UPS
+Grupo electrógeno
+Climatización
+Pasillo frío
+Pasillo caliente
+Reconstituted xml infoset
+crud
+prueba
+usb
+ws- security
+ws- trust
+“todo/parte”, o bien “tiene un”
+uuid
+ws-trust
+ws-discovery wsdp
+operacion
+ws-secure conversation
+ws
+igmp
+multicast
+scatternet y piconet
+xml
+/usr
+bpdu (bridge protocol data units)
+cables
+cat/cableado
+router/enrrutamiento
+identidad / firma / autenticación
+osi / tcp-ip
+nosql
+ansi/sparc
+bpdus (bridge protocol data units)
+decorator / composite
+kimball
+glosario
+dfd
+patrones gof
+anomalias
+pdf
+apache
+/bin	binarios de comandos esenciales para todos los usuarios.	ls, cp /sbin	binarios del sistema esenciales para la administración (root).	reboot, fdisk /etc	ficheros de configuración del sistema y aplicaciones.	/etc/passwd, /etc/shadow, /etc/fstab /dev	archivos de dispositivos físicos y virtuales.	/dev/sda (disco), /dev/null /var	archivos variables (logs, bases de datos, colas de correo).	/var/log/syslog, /var/mail /usr	utilidades e información de usuario de solo lectura.	/usr/bin, /usr/lib /lib	bibliotecas (libraries) esenciales para binarios en /bin y /sbin.	bibliotecas compartidas (.so) /proc	sistema de archivos virtual con información del kernel y procesos.	/proc/cpuinfo, /proc/meminfo /mnt	punto de montaje temporal para sistemas de archivos.	montajes temporales manuales /media	puntos de montaje automáticos para dispositivos extraíbles.	dispositivos usb, cd-rom /opt	paquetes de software adicional de terceros.	/opt/google/chrome
+linux (fhs)
+apt / dpkg

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<style>
+  html, body { margin: 0; padding: 0; background: transparent; width: 100%; }
+  body { font-family: "Source Sans Pro", "Source Sans 3", sans-serif; font-size: 16px; line-height: 1.55; color: #31333F; }
+  #cont { padding: 2px 0; width: 100%; box-sizing: border-box; }
+  .linea { padding: 3px 6px; white-space: pre-wrap; word-break: break-word; cursor: context-menu; border-radius: 4px; }
+  .linea:hover { background: rgba(128,128,128,.10); }
+  #cont { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; table-layout: auto; }
+  td { position: relative; border: 1px solid rgba(128,128,128,.30); padding: 6px 8px; vertical-align: top; white-space: pre-wrap; overflow-wrap: break-word; cursor: context-menu; }
+  .rs { position: absolute; top: 0; right: -4px; width: 8px; height: 100%; cursor: col-resize; z-index: 3; }
+  .rs:hover, .rs.act { background: rgba(255,75,75,.40); }
+  td:hover { background: rgba(128,128,128,.10); }
+  .cod { background: rgba(128,128,128,.14); border-radius: 8px; padding: 10px 14px; margin: 4px 0;
+         font-family: "Source Code Pro", Menlo, Consolas, monospace; font-size: 14px; line-height: 1.6; }
+  .cod .linea { padding: 0 2px; border-radius: 3px; }
+  .cod .linea:hover { background: rgba(128,128,128,.18); }
+  td.celdacod { background: rgba(128,128,128,.14); font-family: "Source Code Pro", Menlo, Consolas, monospace; font-size: 14px; }
+  #menu { position: fixed; display: none; z-index: 10; min-width: 230px; padding: 4px; border-radius: 8px;
+          background: #fff; border: 1px solid rgba(128,128,128,.45); box-shadow: 0 4px 14px rgba(0,0,0,.25); }
+  #menu button { display: block; width: 100%; text-align: left; border: 0; background: transparent; color: #31333F;
+                 padding: 8px 12px; font: inherit; font-size: 15px; border-radius: 6px; cursor: pointer; }
+  #menu button:hover { background: rgba(255,75,75,.12); }
+</style></head>
+<body>
+<div id="cont"></div>
+<div id="menu"></div>
+<script>
+  const enviar = (tipo, extra) => window.parent.postMessage(Object.assign({isStreamlitMessage: true, type: tipo}, extra || {}), "*");
+  let lineas = [], menuAbierto = false, ultimoTexto = null;
+  let anchos = null;   // anchos (px) de las columnas fijados con el ratón; null = ajuste automático
+  const menu = document.getElementById("menu"), cont = document.getElementById("cont");
+
+  const esc = (t) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const fmt = (t) => esc(t).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>");
+  const esCod = (t) => /^`[^`]+`$/.test(t.trim());                    // línea en cursiva: `texto`
+  const quitaCod = (t) => { const m = t.match(/^(\s*)`([^`]+)`\s*$/); return m ? m[1] + m[2] : t; };
+
+  function posDosPuntos(t) {
+    for (let i = 0; i < t.length; i++) {
+      if (t[i] !== ":") continue;
+      if (t.substr(i + 1, 2) === "//") continue;
+      if (t.slice(0, i).trim()) return i;
+    }
+    return -1;
+  }
+  function opciones(raw, n) {
+    const core = raw.trim(), res = [];
+    if (n > 1) {  // varias líneas seleccionadas: todos los formatos
+      res.push(["linea", "Negrita en las " + n + " líneas"]);
+      res.push(["antes", "Negrita solo antes de «:» en las " + n + " líneas"]);
+      res.push(["quitar", "Quitar negrita de las " + n + " líneas"]);
+      res.push(["cursiva", "Cursiva en las " + n + " líneas seleccionadas"]);
+      res.push(["quitar_cursiva", "Quitar cursiva de las " + n + " líneas"]);
+      return res;
+    }
+    if (!core) return res;
+    if (esCod(core)) { res.push(["quitar_cursiva", "Quitar cursiva"]); return res; }
+    if (!(core.startsWith("**") && core.endsWith("**") && core.indexOf("**", 2) === core.length - 2))
+      res.push(["linea", "Negrita en toda la línea"]);
+    const i = posDosPuntos(core);
+    if (i > 0 && !/^\*\*[^*]*:\*\*/.test(core)) res.push(["antes", "Negrita solo antes de «:»"]);
+    if (raw.indexOf("**") >= 0) res.push(["quitar", "Quitar negrita"]);
+    res.push(["cursiva", "Cursiva (fondo gris)"]);
+    return res;
+  }
+
+  // Líneas [primera, última] cubiertas por la selección del ratón si el clic derecho cae dentro de ella
+  function rangoSeleccion(l) {
+    const sel = window.getSelection();
+    if (!sel || sel.isCollapsed || !sel.rangeCount) return null;
+    const lineaDe = (n) => { const e = n && (n.nodeType === 1 ? n : n.parentElement); return e ? e.closest(".linea[data-l]") : null; };
+    const r = sel.getRangeAt(0), a = lineaDe(r.startContainer), b = lineaDe(r.endContainer);
+    if (!a || !b) return null;
+    let lo = +a.dataset.l, hi = +b.dataset.l;
+    if (hi > lo && r.endOffset === 0) hi--;   // la selección termina justo al inicio de la línea siguiente
+    return (hi > lo && l >= lo && l <= hi) ? [lo, hi] : null;
+  }
+
+  // Streamlit a veces deja el iframe (y sus contenedores) más estrechos que la línea: se fuerza al 100 %
+  function ajustarAncho() {
+    try {
+      const f = window.frameElement;
+      if (!f) return;
+      f.style.width = "100%";
+      f.style.minWidth = "100%";
+      f.removeAttribute("width");
+      let n = f.parentElement;
+      for (let k = 0; k < 3 && n; k++, n = n.parentElement) {
+        n.style.width = "100%";
+        n.style.maxWidth = "100%";
+      }
+    } catch (e) { /* sin acceso al marco: se queda como esté */ }
+  }
+
+  function alto() {
+    let h = cont.offsetHeight + 6;
+    if (menuAbierto) h = Math.max(h, menu.offsetTop + menu.offsetHeight + 8);
+    enviar("streamlit:setFrameHeight", {height: h});
+  }
+  function aplicarAnchos() {
+    const t = cont.querySelector("table");
+    if (!t) return;
+    const cols = t.querySelectorAll("col");
+    if (!anchos) { t.style.tableLayout = ""; cols.forEach((c) => { c.style.width = ""; }); return; }
+    t.style.tableLayout = "fixed";   // la última columna queda libre y se lleva el resto del ancho
+    cols.forEach((c, i) => { c.style.width = i < cols.length - 1 ? anchos[i] + "px" : ""; });
+  }
+
+  // Cambiar el ancho de una columna arrastrando su borde (doble clic en el borde: vuelve al ajuste automático)
+  cont.addEventListener("mousedown", (e) => {
+    const rs = e.target.closest && e.target.closest(".rs");
+    if (!rs || e.button !== 0) return;
+    e.preventDefault(); e.stopPropagation();
+    const t = cont.querySelector("table");
+    if (!t) return;
+    if (!anchos) anchos = Array.from(t.querySelectorAll("col")).map((c) => Math.round(c.getBoundingClientRect().width));
+    const k = +rs.dataset.k, x0 = e.clientX, w0 = anchos[k];
+    rs.classList.add("act");
+    document.body.style.userSelect = "none";
+    const mover = (ev) => {
+      if (ev.buttons === 0) { soltar(); return; }
+      anchos[k] = Math.max(30, Math.round(w0 + ev.clientX - x0));
+      aplicarAnchos(); alto();
+    };
+    const soltar = () => {
+      document.removeEventListener("mousemove", mover);
+      document.removeEventListener("mouseup", soltar);
+      document.body.style.userSelect = "";
+      rs.classList.remove("act");
+    };
+    document.addEventListener("mousemove", mover);
+    document.addEventListener("mouseup", soltar);
+  });
+  cont.addEventListener("dblclick", (e) => {
+    if (e.target.closest && e.target.closest(".rs")) { anchos = null; aplicarAnchos(); alto(); }
+  });
+
+  function cerrarMenu() { if (menuAbierto) { menuAbierto = false; menu.style.display = "none"; alto(); } }
+
+  function pintar(texto) {
+    lineas = (texto || "").split("\n");
+    const conTabs = (texto || "").indexOf("\t") >= 0;
+    let h = "";
+    if (conTabs) {
+      const maxCols = Math.max(...lineas.map((l) => l.split("\t").length));
+      if (anchos && anchos.length !== maxCols) anchos = null;   // la tabla cambió de forma: se vuelve al ajuste automático
+      h = "<table><colgroup>" + "<col>".repeat(maxCols) + "</colgroup>";
+      lineas.forEach((l, i) => {
+        const cs = l.split("\t");
+        h += "<tr>" + cs.map((c, j) => {
+          // fila con menos columnas que la tabla: su última celda se estira hasta el final (ancho completo)
+          const nSpan = (j === cs.length - 1 && cs.length < maxCols) ? maxCols - cs.length + 1 : 1;
+          const span = nSpan > 1 ? ` colspan="${nSpan}"` : "";
+          const k = j + nSpan - 1;   // última columna que cubre la celda
+          const tir = k < maxCols - 1 ? `<div class="rs" data-k="${k}" title="Arrastra para cambiar el ancho (doble clic: ajuste automático)"></div>` : "";
+          return esCod(c)
+            ? `<td class="celdacod"${span} data-l="${i}" data-c="${j}">${esc(quitaCod(c))}${tir}</td>`
+            : `<td${span} data-l="${i}" data-c="${j}">${fmt(c) || "&nbsp;"}${tir}</td>`;
+        }).join("") + "</tr>";
+      });
+      h += "</table>";
+    } else {
+      let grupo = [];  // líneas en cursiva consecutivas: forman un único bloque gris
+      const volcar = () => { if (grupo.length) { h += '<div class="cod">' + grupo.join("") + "</div>"; grupo = []; } };
+      lineas.forEach((l, i) => {
+        if (esCod(l)) { grupo.push(`<div class="linea" data-l="${i}" data-c="0">${esc(quitaCod(l))}</div>`); return; }
+        volcar();
+        h += `<div class="linea" data-l="${i}" data-c="0">${fmt(l) || "&nbsp;"}</div>`;
+      });
+      volcar();
+    }
+    cont.innerHTML = h;
+    aplicarAnchos();
+    ajustarAncho();
+    cerrarMenu();
+    alto();
+  }
+
+  document.addEventListener("contextmenu", (e) => {
+    const el = e.target.closest("[data-l]");
+    if (!el) return;
+    e.preventDefault();
+    const l = +el.dataset.l, c = +el.dataset.c;
+    const raw = (lineas[l] || "").split("\t")[c] || "";
+    const rg = el.tagName === "TD" ? null : rangoSeleccion(l);
+    const ops = opciones(raw, rg ? rg[1] - rg[0] + 1 : 1);
+    if (el.tagName === "TD") {   // opciones de columnas: afectan solo a la fila donde se hace clic
+      const nCel = (lineas[l] || "").split("\t").length;
+      const maxC = Math.max(...lineas.map((x) => x.split("\t").length));
+      if (nCel > 1) ops.push(["fila_ancha", "Quitar columnas de esta fila (ancho completo)"]);
+      if (nCel < maxC) ops.push(["fila_col", "Añadir columna a esta fila"]);
+    }
+    if (!ops.length) { cerrarMenu(); return; }
+    menu.innerHTML = "";
+    ops.forEach(([modo, etiqueta]) => {
+      const b = document.createElement("button");
+      b.textContent = etiqueta;
+      b.onclick = () => {
+        enviar("streamlit:setComponentValue", {value: {id: Date.now() + "-" + Math.random(), linea: rg ? rg[0] : l, hasta: rg ? rg[1] : null, celda: c, modo: modo}, dataType: "json"});
+        cerrarMenu();
+      };
+      menu.appendChild(b);
+    });
+    menu.style.display = "block";
+    const mw = menu.offsetWidth, mh = menu.offsetHeight;
+    let top = e.clientY;
+    if (top + mh + 6 > window.innerHeight && e.clientY - mh >= 4) top = e.clientY - mh;  // no cabe debajo: hacia arriba
+    menu.style.left = Math.max(4, Math.min(e.clientX, window.innerWidth - mw - 6)) + "px";
+    menu.style.top = Math.max(4, top) + "px";
+    menuAbierto = true;
+    alto();  // si aun así no cabe (apunte muy corto), el marco crece lo justo mientras el menú está abierto
+  });
+  document.addEventListener("click", (e) => { if (!menu.contains(e.target)) cerrarMenu(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") cerrarMenu(); });
+  window.addEventListener("blur", cerrarMenu);
+
+  window.addEventListener("message", (ev) => {
+    if (!ev.data || ev.data.type !== "streamlit:render") return;
+    const tema = ev.data.theme;
+    if (tema) {
+      document.body.style.color = tema.textColor;
+      menu.style.background = tema.secondaryBackgroundColor || "#fff";
+      menu.querySelectorAll("button").forEach((b) => (b.style.color = tema.textColor));
+      menu.style.color = tema.textColor;
+    }
+    const t = (ev.data.args || {}).texto || "";
+    if (t !== ultimoTexto) { ultimoTexto = t; pintar(t); } else { ajustarAncho(); }
+  });
+  ajustarAncho();
+  window.addEventListener("resize", alto);
+  enviar("streamlit:componentReady", {apiVersion: 1});
+  enviar("streamlit:setFrameHeight", {height: 40});
+</script>
+</body></html>

@@ -1,0 +1,2 @@
+FROM mistral
+PARAMETER num_predict 2048
