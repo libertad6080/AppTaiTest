@@ -1,2 +1,5 @@
 streamlit
 openai
+Pillow
+pymupdf
+streamlit-aggrid
