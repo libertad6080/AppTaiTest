@@ -1686,3 +1686,6 @@ apache
 /bin	binarios de comandos esenciales para todos los usuarios.	ls, cp /sbin	binarios del sistema esenciales para la administración (root).	reboot, fdisk /etc	ficheros de configuración del sistema y aplicaciones.	/etc/passwd, /etc/shadow, /etc/fstab /dev	archivos de dispositivos físicos y virtuales.	/dev/sda (disco), /dev/null /var	archivos variables (logs, bases de datos, colas de correo).	/var/log/syslog, /var/mail /usr	utilidades e información de usuario de solo lectura.	/usr/bin, /usr/lib /lib	bibliotecas (libraries) esenciales para binarios en /bin y /sbin.	bibliotecas compartidas (.so) /proc	sistema de archivos virtual con información del kernel y procesos.	/proc/cpuinfo, /proc/meminfo /mnt	punto de montaje temporal para sistemas de archivos.	montajes temporales manuales /media	puntos de montaje automáticos para dispositivos extraíbles.	dispositivos usb, cd-rom /opt	paquetes de software adicional de terceros.	/opt/google/chrome
 linux (fhs)
 apt / dpkg
+comentario
+servicios
+tablespace oracle
