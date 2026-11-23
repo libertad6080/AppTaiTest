@@ -1689,3 +1689,4 @@ apt / dpkg
 comentario
 servicios
 tablespace oracle
+ibra óptica
