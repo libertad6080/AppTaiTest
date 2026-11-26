@@ -1,4 +1,3 @@
-Algoritmo
 Array
 Vector
 Matriz
@@ -1690,3 +1689,5 @@ comentario
 servicios
 tablespace oracle
 ibra óptica
+ordenacion
+soap / rest
