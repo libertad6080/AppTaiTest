@@ -136,6 +136,210 @@ def preparar_datos_angel():
     return True
 
 
+# ==========================================
+# ☁️ COPIA AUTOMÁTICA EN GITHUB (solo online)
+#   En Streamlit Cloud los archivos se borran al reiniciar. Aquí los datos (las 4 BD y los 2 .txt de Mike y de Angel)
+#   se suben solos a una RAMA APARTE de tu repo (datos) y se recuperan al arrancar: ya no hace falta exportar/importar.
+#   Secrets necesarios (Settings -> Secrets de la app):
+#       GITHUB_TOKEN = "github_pat_..."        (token con permiso Contents: Read and write SOLO sobre ese repo)
+#       GITHUB_REPO  = "usuario/repositorio"   (el repo donde está esta app)
+#       GITHUB_BRANCH = "datos"                (opcional)
+# ==========================================
+import base64
+from urllib.parse import quote
+
+import requests
+
+
+def _gh_cfg():
+    if not ONLINE:
+        return None
+    try:
+        tk = str(st.secrets.get("GITHUB_TOKEN", "")).strip()
+        repo = str(st.secrets.get("GITHUB_REPO", "")).strip()
+        if not tk or not repo:
+            return None
+        return {"token": tk, "repo": repo, "branch": str(st.secrets.get("GITHUB_BRANCH", "datos")).strip() or "datos"}
+    except Exception:
+        return None
+
+
+def _ficheros_nube() -> dict:
+    """ruta en GitHub -> archivo local, para Mike (carpeta de la app) y Angel (usuarios/angel/)."""
+    out = {}
+    for quien, carpeta in (("mike", Path(".")), ("angel", DIR_ANGEL)):
+        nombres = list(NOMBRES_DATOS) + ([".creado"] if quien == "angel" else [])
+        for n in nombres:
+            out[f"datos/{quien}/{n}"] = carpeta / n
+    return out
+
+
+def _gsha(data: bytes) -> str:
+    return hashlib.sha1(b"blob %d\0" % len(data) + data).hexdigest()  # el mismo hash que usa git
+
+
+def _firma(p: Path):
+    s = p.stat()
+    return (s.st_mtime_ns, s.st_size)
+
+
+class _Nube:
+    ESPERA_QUIETO = 15   # segundos sin cambios antes de subir (para no subir a mitad de una escritura)
+    ESPERA_MAX = 90      # aunque siga cambiando, se sube como mucho cada 90 s
+
+    def __init__(self, cfg):
+        self.br = cfg["branch"]
+        self.api = f"https://api.github.com/repos/{cfg['repo']}"
+        self.h = {"Authorization": f"Bearer {cfg['token']}", "Accept": "application/vnd.github+json",
+                  "X-GitHub-Api-Version": "2022-11-28"}
+        self.sha, self.firma, self.ult, self.sucio = {}, {}, {}, {}
+        self.ok = False
+        self.error = ""
+        self.ultimo = 0.0
+        self.lock = threading.Lock()
+
+    def _req(self, met, url, **kw):
+        h = {**self.h, **kw.pop("headers", {})}
+        return requests.request(met, url, headers=h, timeout=90, **kw)
+
+    def rama(self):
+        r = self._req("GET", f"{self.api}/git/ref/heads/{self.br}")
+        if r.status_code == 200:
+            return
+        if r.status_code != 404:
+            r.raise_for_status()
+        base = self._req("GET", self.api).json()["default_branch"]  # la rama de datos no existe: se crea desde la principal
+        s = self._req("GET", f"{self.api}/git/ref/heads/{base}").json()["object"]["sha"]
+        self._req("POST", f"{self.api}/git/refs", json={"ref": f"refs/heads/{self.br}", "sha": s}).raise_for_status()
+
+    def arbol(self):
+        r = self._req("GET", f"{self.api}/git/trees/{self.br}", params={"recursive": "1"})
+        r.raise_for_status()
+        return {t["path"]: t["sha"] for t in r.json().get("tree", [])
+                if t.get("type") == "blob" and t["path"].startswith("datos/")}
+
+    @staticmethod
+    def _bytes(p: Path) -> bytes:
+        if p.name.endswith(".db"):  # copia coherente de la BD aunque alguien esté escribiendo
+            with tempfile.TemporaryDirectory() as td:
+                tmp = Path(td) / "copia.db"
+                _copiar_sqlite(p, tmp)
+                return tmp.read_bytes()
+        return p.read_bytes()
+
+    def restaurar(self):
+        """Al arrancar: lo que hay en GitHub es lo más reciente; se baja lo que falte o sea distinto."""
+        remoto = self.arbol()
+        self.sha = dict(remoto)
+        for ruta, sh in remoto.items():
+            p = _ficheros_nube().get(ruta)
+            if p is None:
+                continue
+            if not (p.exists() and _gsha(p.read_bytes()) == sh):
+                r = self._req("GET", f"{self.api}/contents/{quote(ruta)}", params={"ref": self.br},
+                              headers={"Accept": "application/vnd.github.raw+json"})
+                r.raise_for_status()
+                if p.name.endswith(".db") and not r.content.startswith(b"SQLite format 3"):
+                    continue  # por seguridad: nunca se pisa una BD con algo que no lo es
+                p.parent.mkdir(parents=True, exist_ok=True)
+                for extra in (p.with_name(p.name + "-wal"), p.with_name(p.name + "-shm"), p.with_name(p.name + "-journal")):
+                    extra.unlink(missing_ok=True)
+                tmp = p.with_name(p.name + ".tmp")
+                tmp.write_bytes(r.content)
+                os.replace(tmp, p)
+            self.firma[ruta] = _firma(p)  # ya está igual que en GitHub: no hay nada que subir
+
+    def conectar(self):
+        with self.lock:
+            try:
+                self.rama()
+                self.restaurar()
+                self.ok = True
+                self.error = ""
+            except Exception as e:
+                self.ok = False
+                self.error = str(e)[:200]
+
+    def _put(self, ruta, data):
+        body = {"message": f"datos: {ruta}", "content": base64.b64encode(data).decode(), "branch": self.br}
+        if ruta in self.sha:
+            body["sha"] = self.sha[ruta]
+        r = self._req("PUT", f"{self.api}/contents/{quote(ruta)}", json=body)
+        if r.status_code in (409, 422):  # el hash que teníamos ya no vale: se refresca y se reintenta una vez
+            self.sha = self.arbol()
+            body.pop("sha", None)
+            if ruta in self.sha:
+                body["sha"] = self.sha[ruta]
+            r = self._req("PUT", f"{self.api}/contents/{quote(ruta)}", json=body)
+        r.raise_for_status()
+        self.sha[ruta] = r.json()["content"]["sha"]
+
+    def subir(self, forzar=False):
+        """Sube lo que ha cambiado. Devuelve cuántos archivos subió."""
+        if not self.ok:
+            return 0
+        n = 0
+        with self.lock:
+            ahora = time.time()
+            for ruta, p in _ficheros_nube().items():
+                try:
+                    if not p.exists():
+                        continue
+                    f = _firma(p)
+                    if self.firma.get(ruta) == f and not forzar:
+                        continue
+                    d = self.sucio.setdefault(ruta, [ahora, ahora])
+                    if self.ult.get(ruta) != f:
+                        d[1] = ahora
+                        self.ult[ruta] = f
+                    if not forzar and ahora - d[1] < self.ESPERA_QUIETO and ahora - d[0] < self.ESPERA_MAX:
+                        continue  # todavía se está escribiendo: en la próxima vuelta
+                    data = self._bytes(p)
+                    if self.sha.get(ruta) != _gsha(data):
+                        self._put(ruta, data)
+                        n += 1
+                        time.sleep(0.3)
+                    self.firma[ruta] = f
+                    self.sucio.pop(ruta, None)
+                except FileNotFoundError:
+                    continue
+            if n:
+                self.ultimo = time.time()
+        return n
+
+    def guardar_ya(self):
+        if not self.ok:
+            self.conectar()
+        return self.subir(forzar=True)
+
+    def bucle(self):
+        while True:
+            time.sleep(15)
+            try:
+                if not self.ok:
+                    self.conectar()
+                if self.ok:
+                    self.subir()
+                    self.error = ""
+            except Exception as e:
+                self.error = str(e)[:200]
+
+
+@st.cache_resource(show_spinner="Recuperando tus datos de GitHub…")
+def nube_obj():
+    """Una vez por arranque de la app: recupera los datos de GitHub y deja un hilo subiendo los cambios."""
+    cfg = _gh_cfg()
+    if not cfg:
+        return None
+    nb = _Nube(cfg)
+    nb.conectar()
+    threading.Thread(target=nb.bucle, daemon=True).start()
+    return nb
+
+
+nube_obj()  # antes del login y de abrir ninguna BD: así lo recuperado ya está en su sitio
+
+
 USUARIO = "Mike"
 if ONLINE:
     USUARIO = st.session_state.get("usuario")
@@ -199,8 +403,25 @@ def barra_usuario():
     c1, c2, c3 = st.columns([6, 3, 1])
     c1.caption(f"👤 Sesión de **{USUARIO}**")
     with c2.popover("💾 Copia de seguridad"):
-        st.caption("En la web los archivos se pierden si la app se reinicia o se vuelve a desplegar. "
-                   "Descarga una copia de vez en cuando; puedes restaurarla aquí mismo.")
+        nb = nube_obj()
+        if nb:
+            if nb.error:
+                st.error("GitHub: " + nb.error)
+            elif not nb.ok:
+                st.warning("Conectando con GitHub…")
+            else:
+                st.success("☁️ Se guarda sola en GitHub" + (
+                    f" · última subida a las {time.strftime('%H:%M:%S', time.localtime(nb.ultimo))}" if nb.ultimo else ""))
+            if st.button("☁️ Guardar ahora", key="nube_ya"):
+                with st.spinner("Subiendo a GitHub…"):
+                    try:
+                        st.toast(f"Hecho: {nb.guardar_ya()} archivos subidos")
+                    except Exception as e:
+                        st.error(str(e)[:200])
+            st.caption("Los cambios se suben solos unos segundos después de hacerlos. La copia en .zip de abajo es un extra por si acaso.")
+        else:
+            st.caption("GitHub aún no está conectado (faltan GITHUB_TOKEN y GITHUB_REPO en Secrets). "
+                       "Mientras tanto, en la web los archivos se pierden si la app se reinicia: descarga una copia de vez en cuando.")
         if st.button("Preparar copia", key="bk_prep"):
             buf = io.BytesIO()
             with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z, tempfile.TemporaryDirectory() as td:
@@ -1536,6 +1757,11 @@ _HTML_COMP_APUNTE = r'''<!DOCTYPE html>
   .cod .linea { padding: 0 2px; border-radius: 3px; }
   .cod .linea:hover { background: rgba(128,128,128,.18); }
   td.celdacod { background: rgba(128,128,128,.14); font-family: "Source Code Pro", Menlo, Consolas, monospace; font-size: 14px; }
+  .azul { background: #1d4ed8; color: #fff; border-radius: 8px; padding: 10px 14px; margin: 4px 0; }
+  .azul .linea { padding: 0 2px; border-radius: 3px; }
+  .azul .linea:hover { background: rgba(255,255,255,.18); }
+  td.celdaz { background: #1d4ed8; color: #fff; }
+  td.celdaz:hover { background: #1e40af; }
   #menu { position: fixed; display: none; z-index: 10; min-width: 230px; padding: 4px; border-radius: 8px;
           background: #fff; border: 1px solid rgba(128,128,128,.45); box-shadow: 0 4px 14px rgba(0,0,0,.25); }
   #menu button { display: block; width: 100%; text-align: left; border: 0; background: transparent; color: #31333F;
@@ -1555,6 +1781,8 @@ _HTML_COMP_APUNTE = r'''<!DOCTYPE html>
   const fmt = (t) => esc(t).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>");
   const esCod = (t) => /^`[^`]+`$/.test(t.trim());                    // línea en cursiva: `texto`
   const quitaCod = (t) => { const m = t.match(/^(\s*)`([^`]+)`\s*$/); return m ? m[1] + m[2] : t; };
+  const esAz = (t) => /^==[^=](.*[^=])?==$/.test(t.trim());           // línea blanca sobre azul: ==texto==
+  const quitaAz = (t) => { const m = t.match(/^(\s*)==([^=](?:.*[^=])?)==\s*$/); return m ? m[1] + m[2] : t; };
 
   function posDosPuntos(t) {
     for (let i = 0; i < t.length; i++) {
@@ -1572,16 +1800,20 @@ _HTML_COMP_APUNTE = r'''<!DOCTYPE html>
       res.push(["quitar", "Quitar negrita de las " + n + " líneas"]);
       res.push(["cursiva", "Cursiva en las " + n + " líneas seleccionadas"]);
       res.push(["quitar_cursiva", "Quitar cursiva de las " + n + " líneas"]);
+      res.push(["azul", "Blanco sobre azul en las " + n + " líneas"]);
+      res.push(["quitar_azul", "Quitar azul de las " + n + " líneas"]);
       return res;
     }
     if (!core) return res;
-    if (esCod(core)) { res.push(["quitar_cursiva", "Quitar cursiva"]); return res; }
+    if (esCod(core)) { res.push(["quitar_cursiva", "Quitar cursiva"]); res.push(["azul", "Texto blanco sobre fondo azul"]); return res; }
+    if (esAz(core)) { res.push(["quitar_azul", "Quitar azul"]); res.push(["cursiva", "Cursiva (fondo gris)"]); return res; }
     if (!(core.startsWith("**") && core.endsWith("**") && core.indexOf("**", 2) === core.length - 2))
       res.push(["linea", "Negrita en toda la línea"]);
     const i = posDosPuntos(core);
     if (i > 0 && !/^\*\*[^*]*:\*\*/.test(core)) res.push(["antes", "Negrita solo antes de «:»"]);
     if (raw.indexOf("**") >= 0) res.push(["quitar", "Quitar negrita"]);
     res.push(["cursiva", "Cursiva (fondo gris)"]);
+    res.push(["azul", "Texto blanco sobre fondo azul"]);
     return res;
   }
 
@@ -1674,6 +1906,7 @@ _HTML_COMP_APUNTE = r'''<!DOCTYPE html>
           const span = nSpan > 1 ? ` colspan="${nSpan}"` : "";
           const k = j + nSpan - 1;   // última columna que cubre la celda
           const tir = k < maxCols - 1 ? `<div class="rs" data-k="${k}" title="Arrastra para cambiar el ancho (doble clic: ajuste automático)"></div>` : "";
+          if (esAz(c)) return `<td class="celdaz"${span} data-l="${i}" data-c="${j}">${esc(quitaAz(c))}${tir}</td>`;
           return esCod(c)
             ? `<td class="celdacod"${span} data-l="${i}" data-c="${j}">${esc(quitaCod(c))}${tir}</td>`
             : `<td${span} data-l="${i}" data-c="${j}">${fmt(c) || "&nbsp;"}${tir}</td>`;
@@ -1681,10 +1914,16 @@ _HTML_COMP_APUNTE = r'''<!DOCTYPE html>
       });
       h += "</table>";
     } else {
-      let grupo = [];  // líneas en cursiva consecutivas: forman un único bloque gris
-      const volcar = () => { if (grupo.length) { h += '<div class="cod">' + grupo.join("") + "</div>"; grupo = []; } };
+      let grupo = [], tipo = null;  // líneas en cursiva (bloque gris) o en azul consecutivas: forman un único bloque
+      const volcar = () => { if (grupo.length) { h += '<div class="' + (tipo === "az" ? "azul" : "cod") + '">' + grupo.join("") + "</div>"; grupo = []; } tipo = null; };
       lineas.forEach((l, i) => {
-        if (esCod(l)) { grupo.push(`<div class="linea" data-l="${i}" data-c="0">${esc(quitaCod(l))}</div>`); return; }
+        const t = esCod(l) ? "cod" : (esAz(l) ? "az" : null);
+        if (t) {
+          if (tipo !== t) volcar();
+          tipo = t;
+          grupo.push(`<div class="linea" data-l="${i}" data-c="0">${esc(t === "cod" ? quitaCod(l) : quitaAz(l))}</div>`);
+          return;
+        }
         volcar();
         h += `<div class="linea" data-l="${i}" data-c="0">${fmt(l) || "&nbsp;"}</div>`;
       });
@@ -1783,6 +2022,7 @@ def _pos_dos_puntos(txt: str):
 
 
 _RE_CURSIVA = re.compile(r"^`[^`]+`$")
+_RE_AZUL = re.compile(r"^==[^=](.*[^=])?==$")
 
 
 def _es_cursiva(txt: str) -> bool:
@@ -1790,11 +2030,32 @@ def _es_cursiva(txt: str) -> bool:
     return bool(_RE_CURSIVA.match((txt or "").strip()))
 
 
+def _es_azul(txt: str) -> bool:
+    """Una línea en blanco sobre azul se guarda envuelta en ==dobles igual== (se ve como un bloque azul)."""
+    return bool(_RE_AZUL.match((txt or "").strip()))
+
+
+def _azul_celda(txt: str, modo: str) -> str:
+    m = re.match(r"^(\s*)(.*?)(\s*)$", txt, flags=re.DOTALL)
+    ini, nucleo, fin = m.groups()
+    if modo == "quitar_azul":
+        return f"{ini}{nucleo[2:-2] if _es_azul(nucleo) else nucleo}{fin}"
+    if not nucleo or _es_azul(nucleo):
+        return txt
+    if _es_cursiva(nucleo):  # el azul y la cursiva no se mezclan: el azul sustituye a la cursiva
+        nucleo = nucleo[1:-1]
+    limpio = nucleo.replace("**", "").replace("`", "").strip()
+    envuelto = f"=={limpio}=="
+    return f"{ini}{envuelto}{fin}" if _es_azul(envuelto) else txt
+
+
 def _cursiva_celda(txt: str, modo: str) -> str:
     m = re.match(r"^(\s*)(.*?)(\s*)$", txt, flags=re.DOTALL)
     ini, nucleo, fin = m.groups()
     if modo == "quitar_cursiva":
         return f"{ini}{nucleo[1:-1] if _es_cursiva(nucleo) else nucleo}{fin}"
+    if _es_azul(nucleo):  # la cursiva sustituye al azul
+        nucleo = nucleo[2:-2]
     if not nucleo or _es_cursiva(nucleo):
         return txt
     limpio = nucleo.replace("**", "").replace("`", "")
@@ -1804,6 +2065,8 @@ def _cursiva_celda(txt: str, modo: str) -> str:
 def _negrita_celda(txt: str, modo: str) -> str:
     if modo in ("cursiva", "quitar_cursiva"):
         return _cursiva_celda(txt, modo)
+    if modo in ("azul", "quitar_azul"):
+        return _azul_celda(txt, modo)
     if modo == "quitar":
         return txt.replace("**", "")
     m = re.match(r"^(\s*)(.*?)(\s*)$", txt, flags=re.DOTALL)
@@ -1825,7 +2088,7 @@ def _cambiar_columnas_fila(fila: str, modo: str) -> str:
     fila_col: añade una celda vacía al final de la fila."""
     if modo == "fila_col":
         return fila + "\t"
-    partes, hay_cursiva = [], False
+    partes, hay_cursiva, hay_azul = [], False, False
     for c in fila.split("\t"):
         c = c.strip()
         if not c:
@@ -1833,10 +2096,16 @@ def _cambiar_columnas_fila(fila: str, modo: str) -> str:
         if _es_cursiva(c):
             hay_cursiva = True
             c = c[1:-1]
+        elif _es_azul(c):
+            hay_azul = True
+            c = c[2:-2]
         partes.append(c)
     unido = " ".join(partes)
     if hay_cursiva and unido.strip():
         return f"`{unido.replace('`', '')}`"
+    if hay_azul and unido.strip():
+        envuelto = f"=={unido}=="
+        return envuelto if _es_azul(envuelto) else unido
     return unido
 
 
@@ -1848,10 +2117,10 @@ def _aplicar_negrita(cont: str, linea: int, celda: int, modo: str, hasta=None) -
         lineas[linea] = _cambiar_columnas_fila(lineas[linea], modo)
         return "\n".join(lineas)
     if hasta is not None:  # varias líneas seleccionadas: el formato se aplica a todas
-        es_cursiva_modo = modo in ("cursiva", "quitar_cursiva")
+        es_cursiva_modo = modo in ("cursiva", "quitar_cursiva", "azul", "quitar_azul")
         for i in range(linea, min(max(hasta, linea), len(lineas) - 1) + 1):
-            if not es_cursiva_modo and _es_cursiva(lineas[i]):
-                continue  # las líneas en cursiva no llevan negrita
+            if not es_cursiva_modo and (_es_cursiva(lineas[i]) or _es_azul(lineas[i])):
+                continue  # las líneas en cursiva o en azul no llevan negrita
             lineas[i] = _negrita_celda(lineas[i], modo)
         return "\n".join(lineas)
     celdas = lineas[linea].split("\t")
@@ -1893,9 +2162,9 @@ def mostrar_apunte_negrita(bid, cont, clave):
 
 
 AYUDA_NEGRITA = (
-    "💡 Botón derecho sobre una línea del apunte: negrita (toda la línea o lo que va antes de «:») o cursiva con fondo gris. "
+    "💡 Botón derecho sobre una línea del apunte: negrita (toda la línea o lo que va antes de «:»), cursiva con fondo gris o texto blanco sobre fondo azul. "
     "En las tablas también puedes quitar o añadir columnas solo en la fila donde haces clic. "
-    "Si seleccionas varias líneas con el ratón y haces clic derecho dentro de la selección, el formato se aplica a todas (la cursiva las junta en un solo bloque)."
+    "Si seleccionas varias líneas con el ratón y haces clic derecho dentro de la selección, el formato se aplica a todas (la cursiva y el azul las juntan en un solo bloque)."
 )
 
 
@@ -1903,6 +2172,54 @@ def mostrar_bloque(bid, etq, cont, prefijo, nivel="###"):
     """Cada apunte va en su propio cajetín (con borde), con el título en negrita y sin línea final."""
     with st.container(border=True):
         _contenido_bloque(bid, etq, cont, prefijo)
+
+
+def _md_con_tablas(txt: str) -> str:
+    """Apunte con bloques ``` que además lleva tabuladores: las líneas con tabuladores (fuera de los
+    bloques de código) se convierten en tabla Markdown; dentro del código los tabuladores pasan a espacios."""
+    lineas = (txt or "").replace("\r\n", "\n").split("\n")
+    salida, tabla, dentro = [], [], False
+
+    def volcar_tabla():
+        if not tabla:
+            return
+        filas = [[c.strip().replace("|", "\\|") for c in f.split("\t")] for f in tabla]
+        n = max(len(f) for f in filas)
+        filas = [f + [""] * (n - len(f)) for f in filas]
+        if salida and salida[-1].strip():
+            salida.append("")
+        salida.append("| " + " | ".join(filas[0]) + " |")
+        salida.append("|" + "---|" * n)
+        salida.extend("| " + " | ".join(f) + " |" for f in filas[1:])
+        salida.append("")
+        tabla.clear()
+
+    for l in lineas:
+        if l.strip().startswith("```"):
+            volcar_tabla()
+            dentro = not dentro
+            salida.append(l)
+        elif dentro:
+            salida.append(l.replace("\t", "    "))
+        elif "\t" in l and l.strip():
+            tabla.append(l)
+        else:
+            volcar_tabla()
+            salida.append(l)
+    volcar_tabla()
+    # _con_saltos solo en los trozos que no son tabla (a una fila de tabla le estropearía el formato)
+    trozos, actual = [], []
+    for l in salida:
+        if l.startswith("|"):
+            if actual:
+                trozos.append(_con_saltos("\n".join(actual)))
+                actual = []
+            trozos.append(l)
+        else:
+            actual.append(l)
+    if actual:
+        trozos.append(_con_saltos("\n".join(actual)))
+    return "\n".join(trozos)
 
 
 def _contenido_bloque(bid, etq, cont, prefijo):
@@ -1933,7 +2250,7 @@ def _contenido_bloque(bid, etq, cont, prefijo):
     cont = formatear_apunte(cont)
     if "```" in cont:
         # apunte con bloque de código (XML, SQL, etc.): se pinta como Markdown aunque lleve tabuladores
-        st.markdown(_con_saltos(cont.replace("\t", "    ")))
+        st.markdown(_md_con_tablas(cont))
     else:
         mostrar_apunte_negrita(bid, cont, f"{prefijo}_{bid}")
 

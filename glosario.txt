@@ -432,7 +432,6 @@ Paquete
 Trama
 Segmento
 Datagrama
-Enrutamiento
 Enrutamiento estático
 Enrutamiento dinámico
 RIP
@@ -1691,3 +1690,7 @@ tablespace oracle
 ibra óptica
 ordenacion
 soap / rest
+802.3
+enrutamiento
+linux ficheros
+correo
